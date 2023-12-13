@@ -7,14 +7,13 @@
 
 hs=`hostname`
 if [ ${hs: -18} = 'amarel.rutgers.edu' ]; then
-    module use /projects/community/modulefiles
-
-    module purge
-    module load gcc/10.2.0/openmpi
-    module load R/4.1.0-gc563
-    module load cmake/3.24.3-sw1088
-
-    module list
+    if conda info --envs | grep -q r-base; then
+         echo "r-base already exists"
+    else
+         #conda create -y -n r-base r-base cmake gcc libopenblas gfortran
+         conda create -y -n r-base -c conda-forge r-base cmake gcc libopenblas gfortran
+    fi
+    conda activate r-base
 fi
 
 if [ "$1" == "--Rscript" ]; then
