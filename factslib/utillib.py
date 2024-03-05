@@ -9,23 +9,23 @@ import netCDF4
 class FactsUtils:
     def __init__(self) -> None:
         ssp119_ref = {'bamber19_ais': [-0.01, 0.10, 0.27],
-                      'bamber19_gris': [0.07, 0.13, 0.32],
+                      'bamber19_gis': [0.07, 0.13, 0.32],
                       }
         
         ssp126_ref = {'bamber19_ais': [-0.01, 0.11, 0.31],
-                      'bamber19_gris': [0.07, 0.14, 0.35]
+                      'bamber19_gis': [0.07, 0.14, 0.35]
                       }
         
         ssp245_ref = {'bamber19_ais': [-0.00, 0.14, 0.43],
-                      'bamber19_gris': [0.08, 0.16, 0.44]
+                      'bamber19_gis': [0.08, 0.16, 0.44]
                       }
         
         ssp370_ref = {'bamber19_ais': [0.01, 0.17, 0.5],
-                      'bamber19_gris': [0.09, 0.19, 0.53]
+                      'bamber19_gis': [0.09, 0.19, 0.53]
                       }
         
         ssp585_ref = {'bamber19_ais': [0.02, 0.19, 0.55],
-                      'bamber19_gris': [0.09, 0.21, 0.35]
+                      'bamber19_gis': [0.09, 0.21, 0.35]
                       }
 
         self.reference_dicts = {'ssp119': ssp119_ref,
@@ -63,7 +63,7 @@ class FactsUtils:
         # Renames the indicies of the dataframe
         quantile_data.index = ['Q17', 'Q50', 'Q83']
 
-        quantile_data.to_csv('quantile_verification.txt')
+        quantile_data.to_csv(f'{module_set}_{region}.txt')
         return(quantile_data)
 
     def get_quantile(self, data, year, quantile, conversion=1000, round_quant=True):
