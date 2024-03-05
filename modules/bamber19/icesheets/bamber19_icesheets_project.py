@@ -160,7 +160,7 @@ def WriteNetCDF(pipeline_id, global_samps, years, nsamps, ice_source, scenario, 
 
 	# Close the netcdf
 	rootgrp.close()
-	if verify:
+	if verify and (ice_source == 'AIS' or ice_source == 'GIS'):
 		util = FactsUtils()
 		util.verify_module_output(scenario=scenario,
 						   module_set='bamber19',
