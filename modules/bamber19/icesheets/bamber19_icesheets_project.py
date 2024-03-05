@@ -6,6 +6,7 @@ import re
 import time
 import h5py
 from netCDF4 import Dataset
+from utillib import *
 
 ''' bamber19_project_icesheets.py
 
@@ -119,7 +120,8 @@ def WriteOutput(eais_samps, wais_samps, ais_samps, gis_samps, years, scenario, b
 	WriteNetCDF(pipeline_id, ais_samps, years, nsamps, "AIS", scenario, baseyear)
 	WriteNetCDF(pipeline_id, gis_samps, years, nsamps, "GIS", scenario, baseyear)
 
-def WriteNetCDF(pipeline_id, global_samps, years, nsamps, ice_source, scenario, baseyear):
+	
+def WriteNetCDF(pipeline_id, global_samps, years, nsamps, ice_source, scenario, baseyear, verify=True):
 
 	# Write the total global projections to a netcdf file
 	nc_filename = os.path.join(os.path.dirname(__file__), "{0}_{1}_globalsl.nc".format(pipeline_id, ice_source))
@@ -158,6 +160,13 @@ def WriteNetCDF(pipeline_id, global_samps, years, nsamps, ice_source, scenario, 
 
 	# Close the netcdf
 	rootgrp.close()
+	if verify:
+		util = FactsUtils()
+		util.verify_module_output(scenario=scenario,
+						   module_set='bamber19',
+						   region=ice_source.lower(),
+						   filename=nc_filename,
+						   year=2100)
 
 
 def GetSATData(fname, scenario, refyear_start=1850, refyear_end=1900, year_start=1900, year_end=2300):
